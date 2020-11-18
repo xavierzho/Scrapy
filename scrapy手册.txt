@@ -1,0 +1,129 @@
+##### 什么是Scrapy
+
+Scrapy是为了爬取网站数据吗，提取结构性数据而编写的应用框架，实现少代码，快速抓取的功能。
+Scrapy是基于Twisted异步网络框架，可以加快我们的下载速度
+
+步骤
+
+1. 建立工程和Spider模板
+   \>scrapy startproject 工程名称
+   \>cd 工程名称
+   \>scrapy genspider 爬虫文件名 域名
+   进一步修改spiders/爬虫文件名.py文件
+
+2. 编写Spider
+   配置 爬虫文件名.py 文件
+   修改对返回页面的处理
+   修改对新增URL爬取请求的处理
+
+3. 编写TIEM pipelines
+   配置pipelines.py文件
+   定义对爬取项(Scraped Item)的处理类
+   配置ITEM_PIPELINES选项
+
+4.优化配置策略
+
+
+
+#### 创建一个新工程
+```
+scrapy startproject <name> [dir]
+```
+
+#### 创建一个爬虫
+
+```
+scrapy genspider [options] <name> <domain>
+```
+
+3.settings
+
+#### 获取爬虫配置信息
+scrapy settings [options]
+
+4.crawl
+#### 运行一个爬虫
+
+```
+scrapy crawl <spider>
+```
+
+#### 输出为json格式文件
+scrapy crawl [爬虫名] -o zufang.json
+5.list
+
+#### 列出工程中所有爬虫
+scrapy list
+
+6.shell
+
+#### 启动URL调试命令行
+
+```
+scrapy shell [url]
+```
+
+7.view 存储、打开网页
+scrapy view url
+
+8.scrapy check
+
+#### 检验爬虫的错误
+
+9.通过爬虫文件运行scrapy
+scrapy runspider
+
+
+
+Request 类
+class scrapy.http.Request()
+~Request对象表示一个HTTP请求。
+~由Spider生成，由Downloader执行。
+
+属性或方法：
+.url:Request 对应的请求URL地址
+.method:对应的请求方法，'GET''POST'等
+.headers:字典类型风格的请求头
+.body:请求内容主题，字符串类型
+.meta:用户添加的扩展信息，在Scrapy内部模块间传递信息使用
+.copy():复制该请求
+
+Responese类
+class scrapy.http.Response()
+~Response对象表示一个HTTP响应
+~由Downloader生成，由Spider处理。
+
+属性或方法：
+.url:Response对应的URL地址
+.status:HTTP状态码，默认是200
+.headers:Response对应的头部信息
+.body:Response对应的内容信息，字符串类型
+.flags:一组标记
+.request:产生Response类型对应的Request对象
+.copy():复制该响应
+
+Item类
+class scrapy.item.Item()
+~Item对象表示一个从HTML页面中提取的信息内容
+~由Spider生成，由Item Pipeline处理。
+~Item类似字典类型，可以按照字典类型操作
+
+Scrapy支持多种HTML信息提取方法，应用在Spider中
+~Beautiful Soup
+~lxml
+~re
+~XPath Seletor
+~CSS Seletor:<HTML>.css('标签名称::attr(标签属性)').extract()
+
+
+爬虫中间件的作用：
+处理引擎传递给爬虫的响应
+处理爬虫传递给引擎的请求
+处理爬虫传递给引擎的数据项
+
+管道的作用(pipelines):
+清理html数据
+做确认
+去重
+存入数据库
+
